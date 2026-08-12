@@ -233,7 +233,7 @@ filter:blur(1.5px)}
 
 
 .resv{position:relative;margin:30px 22px 4px;border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#332B25 0%,#2B2420 45%,#241E1B 100%)}
-.resv::after{content:'';position:absolute;inset:0;background-image:url("img2/css_55a2e8b5.svg");background-size:160px 160px;opacity:.045;mix-blend-mode:overlay;pointer-events:none}
+.resv::after{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIj48ZmlsdGVyIGlkPSJuIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC45IiBudW1PY3RhdmVzPSIyIiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PGZlQ29sb3JNYXRyaXggdHlwZT0ic2F0dXJhdGUiIHZhbHVlcz0iMCIvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiBmaWx0ZXI9InVybCgjbikiIG9wYWNpdHk9IjEiLz48L3N2Zz4=");background-size:160px 160px;opacity:.045;mix-blend-mode:overlay;pointer-events:none}
 .resv-in{position:relative;padding:34px 22px 26px;text-align:center}
 .lgpill{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:999px;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:11px;letter-spacing:.3em;color:rgba(255,255,255,.9)}
 .lgpill .dot{width:5px;height:5px;border-radius:50%;background:#E8CF9A;box-shadow:0 0 8px #E8CF9A}
@@ -305,9 +305,57 @@ filter:blur(1.5px)}
 #expSlides .xslide.on{opacity:1;transform:scale(1.02) !important}
 #expSlides .xslide.out{opacity:0;transform:scale(1) !important;transition:opacity 1.6s cubic-bezier(.4,0,.2,1), transform 1.6s ease !important}
 
-/* v73: curtain待機時の黒ドームはみ出し対策 */
+/* v70: iOS curtain dome hide */
 .curtain{visibility:hidden}
 .curtain.in,.curtain.out{visibility:visible}
+
+/* v70: reservation panel matched to LP design (approved) */
+.resv{background:#fff;border:1px solid rgba(169,136,70,.4);border-radius:0}
+.resv::after{display:none}
+.resv-glow{display:none}
+.resv-in{padding:30px 22px 26px}
+.lgpill{background:none;border:none;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0;padding:0;color:var(--ochre-deep);font-size:15px;letter-spacing:.12em}
+.lgpill::before{display:none}
+.lgpill .dot{display:none}
+.lgbtn{background:none;border:1px solid rgba(169,136,70,.55);border-radius:0;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none;color:var(--ink)}
+.lgbtn::before{display:none}
+.lgbtn.lg-strong{background:var(--ink);border-color:var(--ink);color:#FAF6EE;box-shadow:none}
+.lgbtn .chev i{color:inherit;opacity:.55}
+.resv-note{color:var(--sub)}
+/* ===== gRev: Googleクチコミ B案 (badge + popup) ===== */
+.grv-badge{position:fixed;right:10px;top:104px;z-index:59;display:none;flex-direction:column;gap:6px}
+.grv-badge.show{display:flex}
+.grv-badge{transition:opacity .28s ease, transform .28s ease}
+.grv-badge.gb-hide{opacity:0;transform:translateY(-10px);pointer-events:none}
+
+.gb-chip{background:#fff;border:1px solid rgba(169,136,70,.55);padding:8px 12px 7px;color:var(--ink);cursor:pointer;box-shadow:0 1px 0 rgba(169,136,70,.25);text-align:left;width:172px;box-sizing:border-box}
+.gb-chip .gb-l1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:10px;letter-spacing:.14em;color:var(--ochre-deep);margin-bottom:2px}
+.gb-chip .gb-l2{display:grid;grid-template-columns:52px auto 1fr;align-items:baseline;column-gap:6px}
+.gb-chip .gb-shop{font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.06em;white-space:nowrap}
+.gb-chip .gb-stars{color:var(--ochre-deep);font-size:9px;letter-spacing:1.3px}
+.gb-chip .gb-num{font-family:'Cormorant Garamond',serif;font-size:15px;line-height:1;justify-self:end}
+.gb-chip .gb-l3{display:flex;justify-content:space-between;align-items:baseline;font-size:9px;letter-spacing:.08em;color:var(--sub);margin-top:3px;font-family:'Noto Serif JP',serif}
+.gb-chip .gb-more{color:var(--ochre-deep);white-space:nowrap;margin-left:8px}
+.grv-ov{position:fixed;inset:0;z-index:90;background:rgba(23,19,15,.55);display:none;align-items:flex-end;justify-content:center}
+.grv-ov.open{display:flex}
+.grv-panel{background:#fff;border:1px solid rgba(169,136,70,.4);width:100%;max-width:420px;max-height:78vh;overflow-y:auto;padding:24px 22px calc(20px + env(safe-area-inset-bottom))}
+.grv-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.grv-title{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:15px;color:var(--ochre-deep);letter-spacing:.12em}
+.grv-close{background:none;border:none;font-size:20px;color:var(--sub);padding:4px 8px;cursor:pointer;line-height:1}
+.grv-tabs{display:flex;gap:1px;margin:10px 0 14px}
+.grv-tab{flex:1;text-align:center;padding:9px 0;font-size:12px;letter-spacing:.14em;font-family:'Noto Serif JP',serif;border:1px solid rgba(169,136,70,.55);background:none;color:var(--ink);cursor:pointer}
+.grv-tab.on{background:var(--ink);border-color:var(--ink);color:#FAF6EE}
+.grv-score{display:flex;align-items:baseline;gap:10px;margin:6px 0 2px}
+.grv-score .num{font-family:'Cormorant Garamond',serif;font-size:30px;color:var(--ochre-deep)}
+.grv-score .cnt{font-size:11px;color:var(--sub)}
+.grv-stars{color:var(--ochre-deep);font-size:13px;letter-spacing:2px}
+.grv-sum{font-size:12px;line-height:1.9;margin:10px 0 4px}
+.grv-rv{border-top:1px solid rgba(169,136,70,.25);padding:12px 0}
+.grv-rv .au{font-size:11px;color:var(--sub);margin-bottom:4px;display:flex;justify-content:space-between}
+.grv-rv .tx{font-size:12px;line-height:1.9}
+.grv-empty{font-size:11px;color:var(--sub);padding:12px 0;border-top:1px solid rgba(169,136,70,.25)}
+.grv-map{display:block;text-align:center;border:1px solid rgba(169,136,70,.55);padding:12px 0;margin-top:14px;font-size:12px;letter-spacing:.14em;font-family:'Noto Serif JP',serif;color:var(--ink);text-decoration:none}
+.grv-note{font-size:9px;color:var(--sub);margin-top:10px;text-align:center}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -358,7 +406,7 @@ filter:blur(1.5px)}
   <div class="eyebrow rv">Private Igloo Room</div>
   <h2 class="lines"><span class="ln">ようこそ、あなたたちだけの</span><span class="ln">「かまくら」へ。</span></h2>
   <p class="poem lines"><span class="ln">扉をくぐった瞬間、まるで秘密基地。</span><span class="ln">KAMAKURAは全席が、</span><span class="ln">まあるい入り口のかまくら個室。</span><span class="ln">&nbsp;</span><span class="ln">隣の席も、時間も忘れて、</span><span class="ln">目の前のひとと料理に夢中になれる。</span></p>
-  <div class="archwrap"><div class="arch imgrv"><img src="img2/img01_bc248f89.webp" alt="かまくら個室 乾杯"></div></div>
+  <div class="archwrap"><div class="arch imgrv"><img src="img2/i00_bc248f89.webp" alt="かまくら個室 乾杯"></div></div>
   <figcaption style="padding-right:34px">ALL PRIVATE IGLOO SEATS</figcaption>
   <div style="text-align:center"><a class="disc" onclick="go('menu')">DISCOVER →</a></div>
 </section>
@@ -366,14 +414,14 @@ filter:blur(1.5px)}
   <div class="eyebrow rv">Cuisine — Creative Bistro</div>
   <h2 class="lines"><span class="ln">ホテルシェフがつくる、</span><span class="ln">和牛とチーズの創作ビストロ。</span></h2>
   <p class="poem lines"><span class="ln">特製マカロンにはじまり、自家製の和牛生ハム。</span><span class="ln">旬をとじこめた前菜に、とろけるチーズ。</span><span class="ln">ホテルで腕を磨いたシェフが、</span><span class="ln">ひと皿ごとに小さな驚きを仕込みます。</span></p>
-  <figure class="full imgrv"><img src="img2/img02_f60f46b7.webp" alt="こだわりの食材" style="width:100%;display:block"></figure>
+  <figure class="full imgrv"><img src="img2/i01_f60f46b7.webp" alt="こだわりの食材" style="width:100%;display:block"></figure>
   <div style="text-align:center"><a class="disc" onclick="go('menu')">MENU →</a></div>
 </section>
 <section>
   <div class="eyebrow rv">Experience</div>
   <h2 class="lines"><span class="ln">見て、香って、撮って、味わう。</span><span class="ln">"体験型ビストロ"</span></h2>
   <p class="poem lines"><span class="ln">KAMAKURAが届けるのは、</span><span class="ln">料理だけじゃありません。</span><span class="ln">五感ぜんぶで愉しむ夜を、リーズナブルに。</span></p>
-  <div class="archwrap"><div class="arch imgrv expslides" id="expSlides"><img class="xslide on" src="img2/img03_569a4748.jpg" alt="店内の様子"><img class="xslide" src="img2/img04_6c0b34ea.jpg" alt="KAMAKURAの体験 1"><img class="xslide" src="img2/img05_5bac6239.jpg" alt="KAMAKURAの体験 2"><img class="xslide" src="img2/img06_d953c5f8.jpg" alt="KAMAKURAの体験 3"><img class="xslide" src="img2/img07_e6afd04f.jpg" alt="KAMAKURAの体験 4"><img class="xslide" src="img2/img08_1b6f17a5.jpg" alt="KAMAKURAの体験 5"><img class="xslide" src="img2/img09_22697286.jpg" alt="KAMAKURAの体験 6"><img class="xslide" src="img2/img10_e870c2d8.jpg" alt="KAMAKURAの体験 7"><img class="xslide" src="img2/img11_7791ef5a.jpg" alt="KAMAKURAの体験 8"></div></div>
+  <div class="archwrap"><div class="arch imgrv expslides" id="expSlides"><img class="xslide on" src="img2/i02_569a4748.jpg" alt="店内の様子"><img class="xslide" src="img2/i03_6c0b34ea.jpg" alt="KAMAKURAの体験 1"><img class="xslide" src="img2/i04_5bac6239.jpg" alt="KAMAKURAの体験 2"><img class="xslide" src="img2/i05_d953c5f8.jpg" alt="KAMAKURAの体験 3"><img class="xslide" src="img2/i06_e6afd04f.jpg" alt="KAMAKURAの体験 4"><img class="xslide" src="img2/i07_1b6f17a5.jpg" alt="KAMAKURAの体験 5"><img class="xslide" src="img2/i08_22697286.jpg" alt="KAMAKURAの体験 6"><img class="xslide" src="img2/i09_e870c2d8.jpg" alt="KAMAKURAの体験 7"><img class="xslide" src="img2/i10_7791ef5a.jpg" alt="KAMAKURAの体験 8"></div></div>
   <div style="text-align:center"><a class="disc" onclick="go('plan')">PLAN →</a></div>
 </section>
 </main>
@@ -385,17 +433,17 @@ filter:blur(1.5px)}
   <h2 class="rv">商品・サービス紹介</h2>
   
   </section>
-<section class="gmenu mlist rv"><h4>おすすめメニュー</h4><div class="mi"><span class="n">神隠しの屋台 特製謎のプルプル</span><span class="dots"></span><span class="p">¥880</span></div><div class="mi"><span class="n">天空少女が作る特製シチュー〜思い出の目玉焼きトースト〜</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">『芽が出た!』植木鉢のポテトサラダ</span><span class="dots"></span><span class="p">¥680</span></div><div class="mi"><span class="n">炭鉱少年の肉団子スープ</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">もののけ干し肉のカルボナーラ</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">魔法使いのチョコレートケーキ</span><span class="dots"></span><span class="p">¥1,180</span></div></section><section class="gmenu mlist rv"><h4>お通し</h4><div class="mi"><span class="n">かまくらの前菜マカロン</span><span class="dots"></span><span class="p">¥400</span></div></section><section class="showcase rv catShow" id="sig" data-idx="0" style="background:#8A5F66"><div class="sc-en">Prosciutto</div><h3 class="sc-jp">自家製和牛の生ハム(九州醤油 ワサビ)</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/img12_b261b3d2.jpg" alt="自家製和牛の生ハム(九州醤油 ワサビ)"></div><div class="sc-disc"><img src="img2/img13_47fbe6ad.jpg" alt="自家製牛タン・サガリ(オリーブ塩だれ/レモン)"></div><div class="sc-disc"><img src="img2/img14_7ae3627d.jpg" alt="生ハムの盛り合わせ 3種"></div><div class="sc-disc"><img src="img2/img15_556b2cfc.jpg" alt="生ハムの盛り合わせ 4種"></div><div class="sc-disc"><img src="img2/img16_dc2f05d7.jpg" alt="ハモンセラーノ(EXオリーブオイル/BP)"></div></div><div class="sc-price">¥1,240(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">チョイス(生ハムのお供) — サラダ/ゼッポリーニ/ラスパデューラ/季節のフルーツ/ブドウ2種</span><span class="dots"></span><span class="p">¥150〜</span></div></div>
-<section class="showcase rv catShow" data-idx="1" style="background:#5C6650"><div class="sc-en">Appetizer</div><h3 class="sc-jp">菜園風ポテトサラダ</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/img17_395d9ec1.jpg" alt="菜園風ポテトサラダ"></div><div class="sc-disc"><img src="img2/img18_4eee13a4.jpg" alt="三陸産ヒラメと生海苔のカルパッチョ"></div><div class="sc-disc"><img src="img2/img19_d0e6e462.jpg" alt="鮪と沢庵のタルタル〜とろたく仕立て〜"></div><div class="sc-disc"><img src="img2/img20_08c5d74f.jpg" alt="広島県産牡蠣のグラティナート"></div></div><div class="sc-price">¥680(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">木の実といちじくのハニーチーズ</span><span class="dots"></span><span class="p">¥580</span></div><div class="mi"><span class="n">おつまみバスクチーズケーキ</span><span class="dots"></span><span class="p">¥780</span></div></div><section class="gmenu mlist rv"><h4>Salad</h4><div class="mi"><span class="n">グリルロメインレタスのシーザーサラダ</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">サーモンとアボカドのサラダ 自家製ドレッシング</span><span class="dots"></span><span class="p">¥980</span></div></section><section class="gmenu mlist rv"><h4>Bread</h4><div class="mi"><span class="n">プレーンバゲット</span><span class="dots"></span><span class="p">¥330</span></div></section>
-<section class="showcase rv catShow" data-idx="2" style="background:#A98850"><div class="sc-en">A La Carte</div><h3 class="sc-jp">牛タン春巻き</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/img21_3badfd88.jpg" alt="牛タン春巻き"></div><div class="sc-disc"><img src="img2/img22_75b23f4e.jpg" alt="牡蛎のアヒージョ"></div><div class="sc-disc"><img src="img2/img23_6eb56bd5.jpg" alt="大トロホルモンと自家製おろしポン酢(アヒージョスタイル)"></div><div class="sc-disc"><img src="img2/img24_77cbf68c.jpg" alt="フライドポテト 〜サワークリームとスイートチリ〜"></div><div class="sc-disc"><img src="img2/img25_091e6afb.jpg" alt="カニのタルタルトースト"></div></div><div class="sc-price">¥400(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">和牛の肉BAKUDAN</span><span class="dots"></span><span class="p">¥1,480</span></div></div>
-<section class="showcase rv catShow" data-idx="3" style="background:#43222A"><div class="sc-en">Meat</div><h3 class="sc-jp">燃えるハンバーグ 卵黄ダレと自家製おろしポン酢</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/img26_d27b7995.jpg" alt="燃えるハンバーグ 卵黄ダレと自家製おろしポン酢"></div><div class="sc-disc"><img src="img2/img27_3bbfbc5e.jpg" alt="KAMAKURA 肉の盛り合わせ"></div><div class="sc-disc"><img src="img2/img28_26fd3a6d.jpg" alt="鴨のロースト〜熟成味噌と香味醤油〜"></div><div class="sc-disc"><img src="img2/img29_a14d1762.jpg" alt="肉汁！！サルシッチャソーセージ"></div></div><div class="sc-price">¥980(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><section class="gmenu mlist rv"><h4>Rice</h4><div class="mi"><span class="n">ライス</span><span class="dots"></span><span class="p">¥450</span></div></section><section class="gmenu mlist rv"><h4>Omelette</h4><div class="mi"><span class="n">KAMAKURA風鉄板卵焼き(スフレスタイル)</span><span class="dots"></span><span class="p">¥980</span></div></section><section class="gmenu mlist rv"><h4>Pasta</h4><div class="mi"><span class="n">ワタリガニのトマトクリーム</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">パスタ大盛り</span><span class="dots"></span><span class="p">¥100</span></div></section><section class="gmenu mlist rv"><h4>冷麺</h4><div class="mi"><span class="n">麻辣担冷麺</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">蟹香るビスク冷麺</span><span class="dots"></span><span class="p">¥1,380</span></div></section>
-<section class="showcase rv catShow" data-idx="4" style="background:#6B4A3E"><div class="sc-en">Dessert</div><h3 class="sc-jp">KAMAKURA生プリン</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/img30_0c4ad1fb.jpg" alt="KAMAKURA生プリン"></div><div class="sc-disc"><img src="img2/img31_0ae07ccb.jpg" alt="焼きレアチーズ"></div><div class="sc-disc"><img src="img2/img32_538b6075.jpg" alt="テリーヌショコラ"></div></div><div class="sc-price">¥380(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">京都ほうじ茶のアイス</span><span class="dots"></span><span class="p">¥400</span></div></div>
+<section class="gmenu mlist rv"><h4>おすすめメニュー</h4><div class="mi"><span class="n">神隠しの屋台 特製謎のプルプル</span><span class="dots"></span><span class="p">¥880</span></div><div class="mi"><span class="n">天空少女が作る特製シチュー〜思い出の目玉焼きトースト〜</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">『芽が出た!』植木鉢のポテトサラダ</span><span class="dots"></span><span class="p">¥680</span></div><div class="mi"><span class="n">炭鉱少年の肉団子スープ</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">もののけ干し肉のカルボナーラ</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">魔法使いのチョコレートケーキ</span><span class="dots"></span><span class="p">¥1,180</span></div></section><section class="gmenu mlist rv"><h4>お通し</h4><div class="mi"><span class="n">かまくらの前菜マカロン</span><span class="dots"></span><span class="p">¥400</span></div></section><section class="showcase rv catShow" id="sig" data-idx="0" style="background:#8A5F66"><div class="sc-en">Prosciutto</div><h3 class="sc-jp">自家製和牛の生ハム(九州醤油 ワサビ)</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i11_b261b3d2.jpg" alt="自家製和牛の生ハム(九州醤油 ワサビ)"></div><div class="sc-disc"><img src="img2/i12_47fbe6ad.jpg" alt="自家製牛タン・サガリ(オリーブ塩だれ/レモン)"></div><div class="sc-disc"><img src="img2/i13_7ae3627d.jpg" alt="生ハムの盛り合わせ 3種"></div><div class="sc-disc"><img src="img2/i14_556b2cfc.jpg" alt="生ハムの盛り合わせ 4種"></div><div class="sc-disc"><img src="img2/i15_dc2f05d7.jpg" alt="ハモンセラーノ(EXオリーブオイル/BP)"></div></div><div class="sc-price">¥1,240(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">チョイス(生ハムのお供) — サラダ/ゼッポリーニ/ラスパデューラ/季節のフルーツ/ブドウ2種</span><span class="dots"></span><span class="p">¥150〜</span></div></div>
+<section class="showcase rv catShow" data-idx="1" style="background:#5C6650"><div class="sc-en">Appetizer</div><h3 class="sc-jp">菜園風ポテトサラダ</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i16_395d9ec1.jpg" alt="菜園風ポテトサラダ"></div><div class="sc-disc"><img src="img2/i17_4eee13a4.jpg" alt="三陸産ヒラメと生海苔のカルパッチョ"></div><div class="sc-disc"><img src="img2/i18_d0e6e462.jpg" alt="鮪と沢庵のタルタル〜とろたく仕立て〜"></div><div class="sc-disc"><img src="img2/i19_08c5d74f.jpg" alt="広島県産牡蠣のグラティナート"></div></div><div class="sc-price">¥680(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">木の実といちじくのハニーチーズ</span><span class="dots"></span><span class="p">¥580</span></div><div class="mi"><span class="n">おつまみバスクチーズケーキ</span><span class="dots"></span><span class="p">¥780</span></div></div><section class="gmenu mlist rv"><h4>Salad</h4><div class="mi"><span class="n">グリルロメインレタスのシーザーサラダ</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">サーモンとアボカドのサラダ 自家製ドレッシング</span><span class="dots"></span><span class="p">¥980</span></div></section><section class="gmenu mlist rv"><h4>Bread</h4><div class="mi"><span class="n">プレーンバゲット</span><span class="dots"></span><span class="p">¥330</span></div></section>
+<section class="showcase rv catShow" data-idx="2" style="background:#A98850"><div class="sc-en">A La Carte</div><h3 class="sc-jp">牛タン春巻き</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i20_3badfd88.jpg" alt="牛タン春巻き"></div><div class="sc-disc"><img src="img2/i21_75b23f4e.jpg" alt="牡蛎のアヒージョ"></div><div class="sc-disc"><img src="img2/i22_6eb56bd5.jpg" alt="大トロホルモンと自家製おろしポン酢(アヒージョスタイル)"></div><div class="sc-disc"><img src="img2/i23_77cbf68c.jpg" alt="フライドポテト 〜サワークリームとスイートチリ〜"></div><div class="sc-disc"><img src="img2/i24_091e6afb.jpg" alt="カニのタルタルトースト"></div></div><div class="sc-price">¥400(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">和牛の肉BAKUDAN</span><span class="dots"></span><span class="p">¥1,480</span></div></div>
+<section class="showcase rv catShow" data-idx="3" style="background:#43222A"><div class="sc-en">Meat</div><h3 class="sc-jp">燃えるハンバーグ 卵黄ダレと自家製おろしポン酢</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i25_d27b7995.jpg" alt="燃えるハンバーグ 卵黄ダレと自家製おろしポン酢"></div><div class="sc-disc"><img src="img2/i26_3bbfbc5e.jpg" alt="KAMAKURA 肉の盛り合わせ"></div><div class="sc-disc"><img src="img2/i27_26fd3a6d.jpg" alt="鴨のロースト〜熟成味噌と香味醤油〜"></div><div class="sc-disc"><img src="img2/i28_a14d1762.jpg" alt="肉汁！！サルシッチャソーセージ"></div></div><div class="sc-price">¥980(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><section class="gmenu mlist rv"><h4>Rice</h4><div class="mi"><span class="n">ライス</span><span class="dots"></span><span class="p">¥450</span></div></section><section class="gmenu mlist rv"><h4>Omelette</h4><div class="mi"><span class="n">KAMAKURA風鉄板卵焼き(スフレスタイル)</span><span class="dots"></span><span class="p">¥980</span></div></section><section class="gmenu mlist rv"><h4>Pasta</h4><div class="mi"><span class="n">ワタリガニのトマトクリーム</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">パスタ大盛り</span><span class="dots"></span><span class="p">¥100</span></div></section><section class="gmenu mlist rv"><h4>冷麺</h4><div class="mi"><span class="n">麻辣担冷麺</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">蟹香るビスク冷麺</span><span class="dots"></span><span class="p">¥1,380</span></div></section>
+<section class="showcase rv catShow" data-idx="4" style="background:#6B4A3E"><div class="sc-en">Dessert</div><h3 class="sc-jp">KAMAKURA生プリン</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i29_0c4ad1fb.jpg" alt="KAMAKURA生プリン"></div><div class="sc-disc"><img src="img2/i30_0ae07ccb.jpg" alt="焼きレアチーズ"></div><div class="sc-disc"><img src="img2/i31_538b6075.jpg" alt="テリーヌショコラ"></div></div><div class="sc-price">¥380(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">京都ほうじ茶のアイス</span><span class="dots"></span><span class="p">¥400</span></div></div>
 <div class="cbx-note rv">※税込価格。食べログ新宿店の公式掲載メニュー(2026年8月10日確認)に準拠。</div>
 <section id="ann" class="dark">
   <div class="eyebrow rv">Anniversary</div>
   <h2 class="lines"><span class="ln">忘れられない夜は、</span><span class="ln">KAMAKURAでつくれる。</span></h2>
   <p class="poem lines"><span class="ln">誕生日、記念日、おつかれさま。</span><span class="ln">アニバーサリーBOXを開けた瞬間の、</span><span class="ln">あの顔が見たいから。</span></p>
-  <figure class="full imgrv"><img src="img2/img33_b42b5484.jpg" alt="アニバーサリー"></figure>
+  <figure class="full imgrv"><img src="img2/i32_b42b5484.jpg" alt="アニバーサリー"></figure>
   <div style="text-align:center"><a class="disc" onclick="go('plan')">PLAN →</a></div>
 </section>
 </main>
@@ -405,7 +453,7 @@ filter:blur(1.5px)}
 <section style="padding-top:44px">
   <div class="eyebrow rv">Plan / Course</div>
   <h2 class="rv">料金・プラン</h2>
-  <div class="archwrap" style="padding:0 60px"><div class="arch imgrv"><img src="img2/img34_66aa7cc1.jpg" alt="コース料理"></div></div>
+  <div class="archwrap" style="padding:0 60px"><div class="arch imgrv"><img src="img2/i33_66aa7cc1.jpg" alt="コース料理"></div></div>
   <div class="plan rv"><div class="nm">Lumi — ルミ <small>全8品+2H飲み放題</small></div><div class="pr">¥4,500<small> / 1名(税込)</small></div><p>はじめてのKAMAKURAに。特製マカロン、牛タンを含む生ハム3種盛りで華やかに幕を開け、グリルロメインのシーザー、濃厚カニクリームパスタから“燃えるハンバーグ”へ。締めは特製ドルチェ。看板を一夜で巡る入門編。</p></div>
       <div class="plan rv"><div class="nm">Mellow — メロウ <small>全9品+2H飲み放題</small></div><div class="pr">¥5,500<small> / 1名(税込)</small></div><p>いちばん選ばれている、リピート率No.1。特製マカロンに始まり、遊び心ある菜園風ポテトサラダ、パルミジャーノを贅沢にかけた和牛炙りカルパッチョ、広島県産牡蠣のグラティナート、鴨のロースト、本格カルボナーラまで。味わいを重ねる全9品。</p></div>
       <div class="plan rv"><div class="nm">Luxe — リュクス <small>全9品+2H飲み放題</small></div><div class="pr">¥6,500<small> / 1名(税込)</small></div><p>特別な夜のための最上級。特製マカロン、和牛を含む生ハム4種盛りにはじまり、旬のヒラメカルパッチョ、和牛タルタルトースト。“燃えるハンバーグ”と鴨ローストのWメイン、締めは季節の土鍋リゾットに特製デザート盛り合わせ。記念日・接待に。</p></div>
@@ -421,7 +469,7 @@ filter:blur(1.5px)}
 <section style="padding-top:44px">
   <div class="eyebrow rv">Access</div>
   <h2 class="rv">アクセス・地図</h2>
-  <div class="archwrap" style="padding:0 60px"><div class="arch imgrv"><img src="img2/img35_b1e32d14.jpg" alt="店内"></div></div>
+  <div class="archwrap" style="padding:0 60px"><div class="arch imgrv"><img src="img2/i34_b1e32d14.jpg" alt="店内"></div></div>
   <div class="shop rv" style="border-top:none">
     <h3>新宿店 — SHINJUKU</h3>
     <dl><dt>住所</dt><dd>東京都新宿区新宿4丁目1-13 田園新宿ビル 7階</dd>
@@ -511,18 +559,16 @@ function slide(d){
   const ctx=cv.getContext('2d');
   const N=SCRUB_FRAMES.length;
   const bmps=new Array(N);
-  const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent);
-  const useBmp=('createImageBitmap' in window)&&!isIOS; /* v74: iOS SafariのcreateImageBitmap不具合回避 */
+  const isIOS=/iPhone|iPad|iPod/.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+  const useBmp=('createImageBitmap' in window)&&!isIOS;
   function load(i){
     if(bmps[i]!==undefined)return;
     bmps[i]=null;
     const im=new Image();
     im.onload=()=>{
-      const done=()=>{ if(i===0)render(0,true); };
-      if(useBmp){ createImageBitmap(im).then(b=>{bmps[i]=b; done();}).catch(()=>{bmps[i]=im; done();}); }
-      else { bmps[i]=im; done(); }
+      if(useBmp){ createImageBitmap(im).then(b=>{bmps[i]=b; if(i===0)render(0,true);}).catch(()=>{bmps[i]=im; if(i===0)render(0,true);}); }
+      else { bmps[i]=im; if(i===0)render(0,true); }
     };
-    im.onerror=()=>{ bmps[i]=undefined; };
     im.src=SCRUB_FRAMES[i];
   }
   // 優先読み込み: 8刻み→4刻み→2刻み→全部(全体を先に粗くカバー)
@@ -928,6 +974,120 @@ window.DISSOLVE_END = 0.35;
   window.addEventListener('load', revealByScroll);
   setInterval(revealByScroll, 500); /* go()でのページ切替後も自動で追従 */
   revealByScroll();
+})();
+</script>
+<div class="grv-badge" id="grvBadge"></div>
+<div class="grv-ov" id="grvOv"><div class="grv-panel">
+  <div class="grv-head"><div class="grv-title">Google Reviews</div><button class="grv-close" id="grvClose" aria-label="閉じる">×</button></div>
+  <div class="grv-tabs" id="grvTabs"></div>
+  <div id="grvBody"></div>
+  <div class="grv-note">星4以上の口コミを抜粋して表示しています／レビュー提供元：Google</div>
+</div></div>
+<script>
+/* gRev: Googleクチコミ 表示システム (GAS配信版 / 濱田MD v2準拠) */
+(function(){
+  var CONFIG={
+    REVIEW_API_URL:"https://script.google.com/macros/s/AKfycbxSKvRVtFLGkPcU7HIvfBXJp5H-AAhTfGNYN6GiuoFjlVtFgLy4lHQaS1EkFAyWzkAp/exec",
+    STORES:[
+      {label:"新宿店",   jsonName:"KAMAKURA 新宿店"},
+      {label:"錦糸町店", jsonName:"かまくら個室ビストロ KAMAKURA 錦糸町店"}
+    ],
+    FETCH_TIMEOUT_MS:10000
+  };
+  var state={data:[],tab:0};
+  function stars(r){var f=Math.round(Number(r)||0);f=Math.max(0,Math.min(5,f));return "★★★★★".slice(0,f)+"☆☆☆☆☆".slice(0,5-f);}
+  function esc(t){var d=document.createElement('div');d.textContent=t==null?'':String(t);return d.innerHTML;}
+  function mapsUrl(name,placeId){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name||'')+'&query_place_id='+encodeURIComponent(placeId||'');}
+  function render(){
+    var tabs=document.getElementById('grvTabs');
+    tabs.innerHTML=state.data.map(function(s,i){return '<button class="grv-tab'+(i===state.tab?' on':'')+'" data-i="'+i+'">'+esc(s.label)+'</button>';}).join('');
+    var d=state.data[state.tab]; if(!d) return;
+    /* 必須要件1: rating/userRatingCountはJSON値を無加工で常時表示 */
+    var h='<div class="grv-score"><span class="num">'+esc(d.rating)+'</span><span class="grv-stars">'+stars(d.rating)+'</span><span class="cnt">'+esc(d.count)+'件のクチコミ</span></div>';
+    var rs=(d.reviews||[]);
+    if(rs.length){
+      h+=rs.map(function(r){
+        return '<div class="grv-rv"><div class="au"><span>'+esc(r.author)+'　'+stars(r.rating)+'</span><span>'+esc(r.relativeTime||'')+'</span></div><div class="tx">'+esc(r.text)+'</div></div>';
+      }).join('');
+    } /* 口コミ0件月: 空枠は出さず総合評価とリンクのみ(MD仕様5) */
+    h+='<a class="grv-map" href="'+mapsUrl(d.jsonName,d.placeId)+'" target="_blank" rel="noopener">Googleマップで開く</a>';
+    document.getElementById('grvBody').innerHTML=h;
+  }
+  function showBadge(){
+    var b=document.getElementById('grvBadge');
+    if(!state.data.length) return;
+    b.innerHTML=state.data.map(function(d,i){
+      return '<div class="gb-chip" role="button" data-i="'+i+'" aria-label="'+esc(d.label)+'のGoogleクチコミを見る">'
+        +'<div class="gb-l1">Google Reviews</div>'
+        +'<div class="gb-l2"><span class="gb-shop">'+esc(d.label)+'</span><span class="gb-stars">'+stars(d.rating)+'</span><span class="gb-num">'+esc(d.rating)+'</span></div>'
+        +'<div class="gb-l3"><span>'+esc(d.count)+'件のクチコミ</span><span class="gb-more">もっと見る ›</span></div></div>';
+    }).join('');
+    b.classList.add('show');
+  }
+  function open(){render();document.getElementById('grvOv').classList.add('open');}
+  document.getElementById('grvBadge').addEventListener('click',function(e){
+    var c=e.target.closest('.gb-chip'); if(!c) return;
+    state.tab=+c.dataset.i; open();
+  });
+  document.getElementById('grvClose').addEventListener('click',function(){document.getElementById('grvOv').classList.remove('open');});
+  document.getElementById('grvOv').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
+  document.getElementById('grvTabs').addEventListener('click',function(e){var t=e.target.closest('.grv-tab');if(t){state.tab=+t.dataset.i;render();}});
+  function pickStore(stores,st){
+    var hit=null;
+    for(var i=0;i<stores.length;i++){ if(stores[i]&&stores[i].name===st.jsonName){hit=stores[i];break;} }
+    if(!hit){ for(var j=0;j<stores.length;j++){ var n=(stores[j]&&stores[j].name)||''; if(n&&(n.indexOf(st.jsonName)>=0||st.jsonName.indexOf(n)>=0)){hit=stores[j];break;} } }
+    return hit;
+  }
+  function init(json){
+    if(!json||!Array.isArray(json.stores)) return; /* フェイルセーフ */
+    var out=[];
+    CONFIG.STORES.forEach(function(st){
+      var d=pickStore(json.stores,st);
+      if(d&&d.rating!=null&&d.userRatingCount!=null){
+        out.push({label:st.label,jsonName:d.name,placeId:d.placeId,rating:d.rating,count:d.userRatingCount,reviews:Array.isArray(d.reviews)?d.reviews:[]});
+      }
+    });
+    if(out.length){state.data=out;showBadge();}
+    /* 該当店舗なし・rating等null → 非表示のまま(フェイルセーフ) */
+  }
+  var ctl=('AbortController' in window)?new AbortController():null;
+  var tm=setTimeout(function(){if(ctl)ctl.abort();},CONFIG.FETCH_TIMEOUT_MS);
+  fetch(CONFIG.REVIEW_API_URL,ctl?{signal:ctl.signal}:{})
+    .then(function(r){clearTimeout(tm);if(!r.ok)throw 0;return r.json();})
+    .then(init)
+    .catch(function(){clearTimeout(tm);/* 取得失敗: 非表示のまま。LP本体へ影響なし */});
+  /* --- スクロール表示制御: sec-kamakura到達までは非表示 / 以降は下スクロール中OFF・上スクロールor停止でON --- */
+  (function(){
+    var badge=document.getElementById('grvBadge');
+    var lastY=window.pageYOffset, idleTm=null, DELTA=10;
+    function revealLine(){
+      var home=document.querySelector('.page.active');
+      if(!home||home.id!=='pg-home') return -1; /* ホーム以外は常に到達扱い */
+      var el=document.getElementById('sec-kamakura');
+      if(!el) return -1;
+      return el.getBoundingClientRect().top + window.pageYOffset;
+    }
+    function setHidden(h){badge.classList.toggle('gb-hide',h);}
+    function onScroll(){
+      if(!badge.classList.contains('show')) return; /* データ未取得時は対象外 */
+      var y=window.pageYOffset, dy=y-lastY;
+      var line=revealLine();
+      var past=(line<0)||((y+window.innerHeight*0.85)>=line);
+      if(!past){ setHidden(true); lastY=y; if(idleTm){clearTimeout(idleTm);idleTm=null;} return; }
+      if(Math.abs(dy)>=DELTA){
+        setHidden(dy>0); /* 下スクロール=隠す / 上スクロール=出す */
+        lastY=y;
+        if(idleTm)clearTimeout(idleTm);
+        idleTm=setTimeout(function(){ idleTm=null; setHidden(false); },600); /* 停止0.6秒で再表示 */
+      }else if(dy===0 && !idleTm){
+        setHidden(false); /* 定期チェック: 停止状態で到達済みなら表示(タイマーは触らない) */
+      }
+    }
+    window.addEventListener('scroll',onScroll,{passive:true});
+    window.addEventListener('resize',onScroll);
+    setInterval(onScroll,700); /* ページ切替(go)後の追従 */
+    onScroll();
+  })();
 })();
 </script>
 </body>
