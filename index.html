@@ -987,7 +987,9 @@ window.DISSOLVE_END = 0.35;
 /* gRev: Googleクチコミ 表示システム (GAS配信版 / 濱田MD v2準拠) */
 (function(){
   var CONFIG={
-    REVIEW_API_URL:"https://script.google.com/macros/s/AKfycbxSKvRVtFLGkPcU7HIvfBXJp5H-AAhTfGNYN6GiuoFjlVtFgLy4lHQaS1EkFAyWzkAp/exec",
+    EMBEDDED_DATA:null, /* 暫定運用: ここに実データJSONを設定するとfetchせず即表示 */
+    MAX_AGE_DAYS:45,    /* 鮮度検査: updatedAtがこれより古いデータは表示しない(半月更新の3倍) */
+    REVIEW_API_URL:"reviews.json", /* 本番(C-2): 同一サーバー上の相対パス */
     STORES:[
       {label:"新宿店",   jsonName:"KAMAKURA 新宿店"},
       {label:"錦糸町店", jsonName:"かまくら個室ビストロ KAMAKURA 錦糸町店"}
@@ -1050,12 +1052,21 @@ window.DISSOLVE_END = 0.35;
     if(out.length){state.data=out;showBadge();}
     /* 該当店舗なし・rating等null → 非表示のまま(フェイルセーフ) */
   }
-  var ctl=('AbortController' in window)?new AbortController():null;
-  var tm=setTimeout(function(){if(ctl)ctl.abort();},CONFIG.FETCH_TIMEOUT_MS);
-  fetch(CONFIG.REVIEW_API_URL,ctl?{signal:ctl.signal}:{})
-    .then(function(r){clearTimeout(tm);if(!r.ok)throw 0;return r.json();})
-    .then(init)
-    .catch(function(){clearTimeout(tm);/* 取得失敗: 非表示のまま。LP本体へ影響なし */});
+  function fresh(json){ /* 鮮度検査: updatedAtが古すぎるデータは不採用(フェイルセーフ) */
+    if(!json||!json.updatedAt) return true; /* updatedAt無しは検査対象外(埋め込み等) */
+    var t=new Date(json.updatedAt).getTime();
+    if(isNaN(t)) return true;
+    return (Date.now()-t) <= CONFIG.MAX_AGE_DAYS*24*3600*1000;
+  }
+  if(CONFIG.EMBEDDED_DATA){ init(CONFIG.EMBEDDED_DATA); }
+  else{
+    var ctl=('AbortController' in window)?new AbortController():null;
+    var tm=setTimeout(function(){if(ctl)ctl.abort();},CONFIG.FETCH_TIMEOUT_MS);
+    fetch(CONFIG.REVIEW_API_URL,ctl?{signal:ctl.signal}:{})
+      .then(function(r){clearTimeout(tm);if(!r.ok)throw 0;return r.json();})
+      .then(function(j){ if(fresh(j)) init(j); /* 古いデータは非表示のまま */ })
+      .catch(function(){clearTimeout(tm);/* 取得失敗: 非表示のまま。LP本体へ影響なし */});
+  }
   /* --- スクロール表示制御: sec-kamakura到達までは非表示 / 以降は下スクロール中OFF・上スクロールor停止でON --- */
   (function(){
     var badge=document.getElementById('grvBadge');
@@ -1088,6 +1099,96 @@ window.DISSOLVE_END = 0.35;
     setInterval(onScroll,700); /* ページ切替(go)後の追従 */
     onScroll();
   })();
+})();
+</script>
+<script>
+/* gMeas: 計測dataLayer標準実装 v1 (GROWX計測標準・伝票カタログ準拠)
+   - GTMコンテナIDは未設定(先方アカウント作成待ち)。IDが無くても伝票(dataLayer)は積まれ、
+     後日GTMスニペットを追加するだけで計測が始まる。LP本体への影響なし(全処理try/catch)。
+   - 排他ルール: 予約リンクはcta_clickのみ(outbound_clickは出さない) */
+(function(){
+  try{
+    window.dataLayer = window.dataLayer || []; /* B-4: GTM未設置でも先に初期化 */
+    function push(o){ try{ window.dataLayer.push(o); }catch(e){} }
+    var PAGE_TITLES={home:"ホーム",menu:"メニュー",plan:"プラン",access:"アクセス"};
+    function storeFromUrl(h){
+      if(h.indexOf("/29221")>=0) return "shinjuku";
+      if(h.indexOf("/29222")>=0) return "kinshicho";
+      if(h.indexOf("Z1DtUj3HYBV3NJ8a9")>=0) return "shinjuku";
+      if(h.indexOf("k5ZuQw4PZJxhh4Aw5")>=0) return "kinshicho";
+      if(h.indexOf("kamakura_shinjuku")>=0) return "shinjuku";
+      if(h.indexOf("kinshicho")>=0) return "kinshicho";
+      return "";
+    }
+    /* --- クリック系(委譲・キャプチャ段階で確実に捕捉) --- */
+    document.addEventListener("click",function(e){
+      try{
+        var a=e.target.closest("a[href]");
+        if(a){
+          var h=a.getAttribute("href")||"";
+          if(h.indexOf("tel:")===0){
+            push({event:"tel_click", tel_number:h.replace("tel:",""), store:storeFromUrl(h)});
+          }else if(h.indexOf("booking.ebica.jp")>=0){
+            /* 排他: 予約はcta_clickのみ */
+            push({event:"cta_click", cta_type:"reserve",
+                  cta_label:(a.textContent||"").replace(/\s+/g," ").trim().slice(0,40),
+                  store:storeFromUrl(h)});
+          }else if(h.indexOf("maps.app.goo.gl")>=0 || h.indexOf("google.com/maps")>=0){
+            push({event:"outbound_click", link_type:"map", url:h, store:storeFromUrl(h)||grvStore(a)});
+          }else if(h.indexOf("instagram.com")>=0){
+            push({event:"outbound_click", link_type:"sns", url:h, store:storeFromUrl(h)});
+          }
+          return;
+        }
+        var chip=e.target.closest(".gb-chip");
+        if(chip){
+          push({event:"review_badge_click", store: chip.dataset.i==="0"?"shinjuku":"kinshicho"});
+        }
+      }catch(err){}
+    }, true);
+    function grvStore(a){ /* レビューポップアップ内の地図リンク: 表示中タブから店舗を判定 */
+      try{
+        var on=document.querySelector(".grv-tab.on");
+        if(on) return on.dataset.i==="0"?"shinjuku":"kinshicho";
+      }catch(e){} return "";
+    }
+    /* --- 仮想ページビュー(B-1: page_view準拠・初回はGoogleタグに任せ二重計上を防ぐ) --- */
+    if(typeof window.go==="function"){
+      var _go=window.go;
+      window.go=function(id){
+        var r=_go.apply(this,arguments);
+        try{
+          push({event:"page_view", page_id:id,
+                page_location:location.origin+location.pathname+"#"+id,
+                page_title:(PAGE_TITLES[id]||id)+" | KAMAKURA"});
+        }catch(e){}
+        return r;
+      };
+    }
+    /* --- セクション到達(1回のみ・既存スクロール系と同じ位置判定方式) --- */
+    var marks=[
+      {sel:"#sec-kamakura", id:"welcome", done:false},
+      {sel:".resv-btnwrap", id:"reserve", done:false}
+    ];
+    function chk(){
+      try{
+        for(var i=0;i<marks.length;i++){
+          var m=marks[i];
+          if(m.done) continue;
+          var el=document.querySelector(m.sel);
+          if(!el) continue;
+          var r=el.getBoundingClientRect();
+          if(r.top < window.innerHeight*0.85 && r.bottom > 0){
+            m.done=true;
+            push({event:"scroll_reach", section_id:m.id});
+          }
+        }
+      }catch(e){}
+    }
+    window.addEventListener("scroll",chk,{passive:true});
+    setInterval(chk,1000);
+    chk();
+  }catch(e){}
 })();
 </script>
 </body>
