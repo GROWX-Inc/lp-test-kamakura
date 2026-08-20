@@ -356,6 +356,11 @@ filter:blur(1.5px)}
 .grv-empty{font-size:11px;color:var(--sub);padding:12px 0;border-top:1px solid rgba(169,136,70,.25)}
 .grv-map{display:block;text-align:center;border:1px solid rgba(169,136,70,.55);padding:12px 0;margin-top:14px;font-size:12px;letter-spacing:.14em;font-family:'Noto Serif JP',serif;color:var(--ink);text-decoration:none}
 .grv-note{font-size:9px;color:var(--sub);margin-top:10px;text-align:center}
+
+/* logo images (2026-08-20 ロゴ差し替え) */
+.logo-img{height:40px;width:auto;display:block}
+.flogo-img{height:64px;width:auto;display:inline-block}
+#opLogo .op-img{position:absolute;left:50%;top:38.5%;transform:translate(-50%,-50%);width:88%;height:auto;filter:drop-shadow(0 2px 14px rgba(0,0,0,.35))}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 </head>
@@ -364,7 +369,7 @@ filter:blur(1.5px)}
 <div class="phone">
 
 <header>
-  <div class="logo" onclick="go('home')">KAMAKURA<small>かまくら個室ビストロ</small></div>
+  <div class="logo" onclick="go('home')"><img src="img2/logo_kamakura.png" alt="かまくら個室ビストロ KAMAKURA 〜かまくら個室と濃厚チーズ〜" class="logo-img"></div>
   <button class="burger" id="burger" aria-label="menu"><span></span><span></span></button>
 </header>
 
@@ -391,7 +396,7 @@ filter:blur(1.5px)}
     <div id="veilDark"></div>
     <canvas id="ptc"></canvas>
     <div id="wisp"></div>
-    <div id="opLogo"><div class="en">KAMAKURA</div><div class="jp">かまくら個室ビストロ</div></div>
+    <div id="opLogo"><img class="op-img" src="img2/logo_fv_gold.png" alt="かまくら個室ビストロ KAMAKURA"></div>
     <div class="scrub-veil">
       <h1 class="lines"><span class="ln">今日は、</span><span class="ln">肩肘張らずに<em> 愉しむ </em>夜。</span></h1>
       <p class="lines"><span class="ln">かまくら個室で過ごす、特別体験ビストロ</span></p>
@@ -488,7 +493,7 @@ filter:blur(1.5px)}
 </main>
 
 <footer>
-  <div class="flogo">KAMAKURA</div>
+  <div class="flogo"><img src="img2/logo_kamakura.png" alt="かまくら個室ビストロ KAMAKURA 〜かまくら個室と濃厚チーズ〜" class="flogo-img"></div>
   <div class="sns sns-ic"><a href="https://www.instagram.com/kamakura_shinjuku/" target="_blank" rel="noopener" aria-label="Instagram 新宿店"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg><span class="igt">新宿</span></a><a href="https://www.instagram.com/kamakura_bistro_kinshicho/" target="_blank" rel="noopener" aria-label="Instagram 錦糸町店"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg><span class="igt">錦糸町</span></a></div>
   <small>© IFREADINING Inc.</small>
 </footer>
@@ -656,8 +661,16 @@ window.DISSOLVE_END = 0.35;
     const c=document.createElement('canvas'); c.width=W; c.height=H;
     const x=c.getContext('2d');
     x.fillStyle='#fff'; x.textAlign='left';
-    let fs=W*0.2;
-    const word='KAMAKURA', gapR=0.14;
+    var lgRect=null;
+    if(typeof FVLOGO!=='undefined' && FVLOGO.complete && FVLOGO.naturalWidth>0){
+      var dw=W*0.88, dh=dw*FVLOGO.naturalHeight/FVLOGO.naturalWidth;
+      var dx=(W-dw)/2, dy=H*0.385-dh/2;
+      x.drawImage(FVLOGO,dx,dy,dw,dh);
+      lgRect={dx:dx,dy:dy,dw:dw,dh:dh};
+    }
+    if(!lgRect){
+    var fs=W*0.2, jfs=0, gapR=0.14;
+    const word='KAMAKURA';
     function measure(f){
       x.font='400 '+f+'px "Cormorant Garamond", Georgia, serif';
       let t=0; for(const ch of word) t+=x.measureText(ch).width;
@@ -668,19 +681,23 @@ window.DISSOLVE_END = 0.35;
     let cx0=(W-measure(fs))/2;
     for(const ch of word){ x.fillText(ch,cx0,H*0.36); cx0+=x.measureText(ch).width+fs*gapR; }
     const jp='かまくら個室ビストロ';
-    let jfs=fs*0.3;
+    jfs=fs*0.3;
     function jm(f){ x.font='500 '+f+'px "Noto Serif JP", serif'; let t=0; for(const ch of jp) t+=x.measureText(ch).width; return t+f*0.5*(jp.length-1); }
     jfs*=(W*0.78)/jm(jfs);
     x.font='500 '+jfs+'px "Noto Serif JP", serif';
     let jx=(W-jm(jfs))/2;
     for(const ch of jp){ x.fillText(ch,jx,H*0.44); jx+=x.measureText(ch).width+jfs*0.5; }
+    }
     const lg=document.getElementById('opLogo');
     if(lg){
+      /* op-imgの配置はCSSで完結(JS非依存)。粒子drawImage座標はCSSと一致 */
       const en=lg.querySelector('.en'), j=lg.querySelector('.jp');
-      en.style.fontSize=fs+'px'; en.style.letterSpacing=gapR+'em'; en.style.textIndent=gapR+'em';
-      en.style.top=(H*0.36-fs*0.74)+'px';
-      j.style.fontSize=jfs+'px'; j.style.letterSpacing='0.5em'; j.style.textIndent='0.5em';
-      j.style.top=(H*0.44-jfs*0.85)+'px';
+      if(en&&j&&!lgRect){
+        en.style.fontSize=fs+'px'; en.style.letterSpacing=gapR+'em'; en.style.textIndent=gapR+'em';
+        en.style.top=(H*0.36-fs*0.74)+'px';
+        j.style.fontSize=jfs+'px'; j.style.letterSpacing='0.5em'; j.style.textIndent='0.5em';
+        j.style.top=(H*0.44-jfs*0.85)+'px';
+      }
     }
     const img=x.getImageData(0,0,W,H).data;
     let textPts=[];
@@ -800,6 +817,8 @@ window.DISSOLVE_END = 0.35;
     points=new THREE.Points(g,m);
     scene.add(points);
   }
+  const FVLOGO=new Image(); FVLOGO.src='img2/logo_fv_gold.png';
+  FVLOGO.onload=function(){ buildScene(); };
   if(document.fonts && document.fonts.ready){ document.fonts.ready.then(buildScene); }
   else buildScene();
   window.addEventListener('resize',function(){ if(cvs.clientWidth<2||cvs.clientHeight<2) return; setSize(); buildScene();});
