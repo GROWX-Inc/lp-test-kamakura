@@ -1,0 +1,60 @@
+{
+ "ok": true,
+ "mode": "full",
+ "store": {
+  "name": "かまくら個室ビストロ KAMAKURA 新宿店（表示確認用ダミー）",
+  "rating": 4.6,
+  "count": 213,
+  "mapsUri": "https://www.google.com/maps/search/?api=1&query=KAMAKURA&query_place_id=ChIJDRNIrWaNGGAR18ZdaTWWOLI",
+  "reviews": [
+   {
+    "rating": 5,
+    "text": "【ダミー】かまくら個室が想像以上に可愛くて、記念日利用にぴったりでした。チーズフォンデュが絶品。お店の方の気遣いも素敵で、また必ず行きます。",
+    "translated": false,
+    "relativeTime": "2 週間前",
+    "mapsUri": "https://www.google.com/maps",
+    "author": {
+     "name": "Yui K.",
+     "photo": "https://growx-inc.github.io/lp-test-kamakura/av1.png",
+     "uri": "https://www.google.com/maps/contrib/"
+    }
+   },
+   {
+    "rating": 4,
+    "text": "【ダミー】Great private igloo rooms! The cheese dishes were amazing and the atmosphere is perfect for a date night in Shinjuku.",
+    "translated": true,
+    "relativeTime": "1 か月前",
+    "mapsUri": "https://www.google.com/maps",
+    "author": {
+     "name": "Daniel M.",
+     "photo": "https://growx-inc.github.io/lp-test-kamakura/av2.png",
+     "uri": "https://www.google.com/maps/contrib/"
+    }
+   },
+   {
+    "rating": 3,
+    "text": "（星3のため表示されない）",
+    "translated": false,
+    "relativeTime": "3 か月前",
+    "mapsUri": "",
+    "author": {
+     "name": "Test",
+     "photo": "",
+     "uri": ""
+    }
+   },
+   {
+    "rating": 5,
+    "text": "【ダミー】誕生日プレートをお願いしたら、想像以上のサプライズ演出。個室なので周りを気にせずお祝いできました。",
+    "translated": false,
+    "relativeTime": "1 週間前",
+    "mapsUri": "https://www.google.com/maps",
+    "author": {
+     "name": "Mika T.",
+     "photo": "https://growx-inc.github.io/lp-test-kamakura/av3.png",
+     "uri": "https://www.google.com/maps/contrib/"
+    }
+   }
+  ]
+ }
+}
