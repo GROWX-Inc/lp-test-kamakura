@@ -19,7 +19,7 @@ jobs:
       - name: Build (本番向け差し替え)
         run: |
           rm -rf dist && mkdir -p dist
-          rsync -a --exclude='dist' --exclude='.git' ./ dist/
+          rsync -a --exclude='dist' --exclude='.git' --exclude='gr' ./ dist/
           # gRev: GitHub Pages(LINK) → 本番(FULL)
           find dist -maxdepth 1 -name "*.html" -exec sed -i 's/MODE:"LINK"/MODE:"FULL"/' {} \;
       - name: Upload via FTPS
