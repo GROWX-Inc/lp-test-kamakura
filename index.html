@@ -153,6 +153,9 @@ footer .flogo{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spaci
 .sns{display:flex;gap:18px;justify-content:center;margin:22px 0}
 .sns a{color:#B8AE9C;font-size:11px;letter-spacing:.15em;text-decoration:none;border-bottom:1px solid rgba(184,174,156,.4);padding-bottom:2px}
 footer small{font-size:9px}
+footer .flinks{margin:18px 0 10px;font-size:11px;letter-spacing:.06em}
+footer .flinks a{color:#B8AE9C;text-decoration:underline;text-underline-offset:3px;border-bottom:none}
+footer .flinks span{margin:0 10px;opacity:.45}
 
 .cta{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:420px;display:flex;gap:1px;z-index:60}
 .cta a{flex:1;text-align:center;padding:20px 0 max(20px, env(safe-area-inset-bottom));font-size:14px;letter-spacing:.18em;text-decoration:none;font-family:'Noto Serif JP',serif}
@@ -366,6 +369,21 @@ filter:blur(1.5px)}
 .grv-map{display:block;text-align:center;border:1px solid rgba(169,136,70,.55);padding:12px 0;margin-top:14px;font-size:12px;letter-spacing:.14em;font-family:'Noto Serif JP',serif;color:var(--ink);text-decoration:none}
 .grv-note{font-size:9px;color:var(--sub);margin-top:10px;text-align:center}
 
+
+/* gRev v2.0 追加: 帰属・投稿者・読込表示 */
+.grv-attr{font-size:13px;color:#5E5E5E;letter-spacing:.02em;margin:2px 0 4px;font-family:Arial,Helvetica,sans-serif}
+.grv-loading{font-size:12px;color:var(--sub);padding:22px 0;text-align:center}
+.grv-rv .auline{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.grv-rv .av{width:28px;height:28px;border-radius:50%;flex:0 0 28px;object-fit:cover;background:#EFEAE0}
+.grv-rv .auname{font-size:11px;color:var(--ink);text-decoration:none;border-bottom:1px solid rgba(169,136,70,.4)}
+.grv-rv .aumeta{font-size:10px;color:var(--sub);margin-left:auto;text-align:right;white-space:nowrap}
+.grv-rv .rvstars{color:var(--ochre-deep);font-size:10px;letter-spacing:1.2px;margin-bottom:3px}
+.grv-trans{display:inline-block;font-size:9px;color:var(--sub);border:1px solid rgba(169,136,70,.35);padding:1px 6px;margin-bottom:4px}
+.grv-rvlink{display:inline-block;font-size:10px;color:var(--ochre-deep);text-decoration:none;border-bottom:1px solid rgba(169,136,70,.4);margin-top:6px}
+.gb-chip .gb-cta{display:flex;justify-content:space-between;align-items:baseline;margin-top:3px}
+.gb-chip .gb-shop2{font-family:'Noto Serif JP',serif;font-size:11px;letter-spacing:.06em}
+.gb-chip .gb-go{font-size:9px;letter-spacing:.08em;color:var(--ochre-deep);font-family:'Noto Serif JP',serif;white-space:nowrap}
+
 /* logo images (2026-08-20 ロゴ差し替え) */
 .logo-img{height:40px;width:auto;display:block}
 .flogo-img{height:64px;width:auto;display:inline-block}
@@ -508,6 +526,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer>
   <div class="flogo"><img src="img2/logo_kamakura.png" alt="かまくら個室ビストロ KAMAKURA 〜かまくら個室と濃厚チーズ〜" class="flogo-img"></div>
   <div class="sns sns-ic"><a href="https://www.instagram.com/kamakura_shinjuku/" target="_blank" rel="noopener" aria-label="Instagram 新宿店"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg><span class="igt">新宿</span></a><a href="https://www.instagram.com/kamakura_bistro_kinshicho/" target="_blank" rel="noopener" aria-label="Instagram 錦糸町店"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5.2"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.3" cy="6.7" r="1.15" fill="currentColor" stroke="none"/></svg><span class="igt">錦糸町</span></a></div>
+  <div class="flinks"><a href="terms.html">利用規約</a><span>|</span><a href="privacy.html">プライバシーポリシー</a></div>
   <small>© IFREADINING Inc.</small>
 </footer>
 
@@ -1013,122 +1032,154 @@ window.DISSOLVE_END = 0.35;
   <div class="grv-head"><div class="grv-title">Google Reviews</div><button class="grv-close" id="grvClose" aria-label="閉じる">×</button></div>
   <div class="grv-tabs" id="grvTabs"></div>
   <div id="grvBody"></div>
-  <div class="grv-note">星4以上の口コミを抜粋して表示しています／レビュー提供元：Google</div>
+  <div class="grv-note" id="grvNote">Googleマップのクチコミを関連度順に取得し、そのうち星4以上のものを表示しています。★の平均評価と件数は全クチコミの集計値です。「自動翻訳」表記のクチコミは原文から翻訳されたものです。</div>
 </div></div>
 <script>
-/* gRev: Googleクチコミ 表示システム (GAS配信版 / 濱田MD v2準拠) */
+/* gRev v2.0: Googleクチコミ ライブ表示 (PHP中継/タップ時取得)
+   濱田側リスク指摘v2.0 (2026-08-27) チェックリスト準拠
+   - 取得はタップ時のみ。結果はJSメモリ内変数にのみ保持(Storage API書き込み禁止)
+   - MODE="LINK": バッジのみ・API不使用・タップでGoogleマップへ
+   - MODE="FULL": タップでポップアップ・PHP中継からライブ取得
+   - PHP側が {"mode":"link"} を返した場合(枠到達・未設定等)は自動でリンク挙動へ */
 (function(){
   var CONFIG={
-    EMBEDDED_DATA:null, /* 暫定運用: ここに実データJSONを設定するとfetchせず即表示 */
-    MAX_AGE_DAYS:45,    /* 鮮度検査: updatedAtがこれより古いデータは表示しない(半月更新の3倍) */
-    REVIEW_API_URL:"reviews.json", /* 本番(C-2): 同一サーバー上の相対パス */
+    MODE:"LINK",
+    PROXY_URL:"gr/reviews-proxy.php",
+    MIN_RATING:4,               /* クライアント要件: 星4以上のみ表示 */
+    FETCH_TIMEOUT_MS:10000,
     STORES:[
-      {label:"新宿店",   jsonName:"KAMAKURA 新宿店"},
-      {label:"錦糸町店", jsonName:"かまくら個室ビストロ KAMAKURA 錦糸町店"}
-    ],
-    FETCH_TIMEOUT_MS:10000
+      {label:"新宿店",   key:"shinjuku",  name:"かまくら個室ビストロ KAMAKURA 新宿店",   placeId:"ChIJDRNIrWaNGGAR18ZdaTWWOLI"},
+      {label:"錦糸町店", key:"kinshicho", name:"かまくら個室ビストロ KAMAKURA 錦糸町店", placeId:"ChIJe6OeVs-JGGARnuNVhoHyyms"}
+    ]
   };
-  var state={data:[],tab:0};
+  var state={tab:0,cache:{},pending:{}}; /* cache: メモリ内のみ。リロードで破棄される */
   function stars(r){var f=Math.round(Number(r)||0);f=Math.max(0,Math.min(5,f));return "★★★★★".slice(0,f)+"☆☆☆☆☆".slice(0,5-f);}
   function esc(t){var d=document.createElement('div');d.textContent=t==null?'':String(t);return d.innerHTML;}
-  function mapsUrl(name,placeId){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(name||'')+'&query_place_id='+encodeURIComponent(placeId||'');}
-  function render(){
-    var tabs=document.getElementById('grvTabs');
-    tabs.innerHTML=state.data.map(function(s,i){return '<button class="grv-tab'+(i===state.tab?' on':'')+'" data-i="'+i+'">'+esc(s.label)+'</button>';}).join('');
-    var d=state.data[state.tab]; if(!d) return;
-    /* 必須要件1: rating/userRatingCountはJSON値を無加工で常時表示 */
-    var h='<div class="grv-score"><span class="num">'+esc(d.rating)+'</span><span class="grv-stars">'+stars(d.rating)+'</span><span class="cnt">'+esc(d.count)+'件のクチコミ</span></div>';
-    var rs=(d.reviews||[]);
-    if(rs.length){
-      h+=rs.map(function(r){
-        return '<div class="grv-rv"><div class="au"><span>'+esc(r.author)+'　'+stars(r.rating)+'</span><span>'+esc(r.relativeTime||'')+'</span></div><div class="tx">'+esc(r.text)+'</div></div>';
-      }).join('');
-    } /* 口コミ0件月: 空枠は出さず総合評価とリンクのみ(MD仕様5) */
-    h+='<a class="grv-map" href="'+mapsUrl(d.jsonName,d.placeId)+'" target="_blank" rel="noopener">Googleマップで開く</a>';
-    document.getElementById('grvBody').innerHTML=h;
-  }
+  function escAttr(t){return esc(t).replace(/"/g,'&quot;');}
+  function safeHttp(u){u=String(u==null?'':u);return (u.indexOf('https://')===0)?u:'';}
+  function mapsUrl(st){return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(st.name)+'&query_place_id='+encodeURIComponent(st.placeId);}
+
+  /* ---- バッジ: 数値なし(静的数値の埋め込みは規約上不可) ---- */
   function showBadge(){
     var b=document.getElementById('grvBadge');
-    if(!state.data.length) return;
-    b.innerHTML=state.data.map(function(d,i){
-      return '<div class="gb-chip" role="button" data-i="'+i+'" aria-label="'+esc(d.label)+'のGoogleクチコミを見る">'
+    b.innerHTML=CONFIG.STORES.map(function(st,i){
+      return '<div class="gb-chip" role="button" tabindex="0" data-i="'+i+'" aria-label="'+escAttr(st.label)+'のGoogleクチコミを見る">'
         +'<div class="gb-l1">Google Reviews</div>'
-        +'<div class="gb-l2"><span class="gb-shop">'+esc(d.label)+'</span><span class="gb-stars">'+stars(d.rating)+'</span><span class="gb-num">'+esc(d.rating)+'</span></div>'
-        +'<div class="gb-l3"><span>'+esc(d.count)+'件のクチコミ</span><span class="gb-more">もっと見る ›</span></div></div>';
+        +'<div class="gb-cta"><span class="gb-shop2">'+esc(st.label)+'</span><span class="gb-go">クチコミを見る ›</span></div></div>';
     }).join('');
     b.classList.add('show');
   }
-  function open(){render();document.getElementById('grvOv').classList.add('open');}
+
+  /* ---- ポップアップ描画 ---- */
+  function attrHtml(){return '<div class="grv-attr" translate="no">Google Maps</div>';}
+  function renderTabs(){
+    document.getElementById('grvTabs').innerHTML=CONFIG.STORES.map(function(st,i){
+      return '<button class="grv-tab'+(i===state.tab?' on':'')+'" data-i="'+i+'">'+esc(st.label)+'</button>';
+    }).join('');
+  }
+  function renderLoading(){
+    renderTabs();
+    document.getElementById('grvBody').innerHTML=attrHtml()+'<div class="grv-loading">クチコミを読み込んでいます…</div>';
+  }
+  function renderLinkOnly(st){
+    renderTabs();
+    document.getElementById('grvBody').innerHTML=attrHtml()
+      +'<div class="grv-empty">ただいまクチコミの表示が混み合っています。Googleマップで直接ご覧ください。</div>'
+      +'<a class="grv-map" href="'+escAttr(mapsUrl(st))+'" target="_blank" rel="noopener">Googleマップで開く</a>';
+  }
+  function renderData(st,d){
+    renderTabs();
+    var h=attrHtml();
+    h+='<div class="grv-score"><span class="num">'+esc(d.rating)+'</span><span class="grv-stars">'+stars(d.rating)+'</span><span class="cnt">'+esc(d.count)+'件のクチコミ</span></div>';
+    var rs=(d.reviews||[]).filter(function(r){return Number(r.rating)>=CONFIG.MIN_RATING;});
+    if(rs.length){
+      h+=rs.map(function(r){
+        var au=r.author||{};
+        var av=safeHttp(au.photo)?'<img class="av" src="'+escAttr(au.photo)+'" alt="" referrerpolicy="no-referrer" onerror="this.style.display=\'none\'">':'';
+        var nm=esc(au.name||'Google ユーザー');
+        var auUri=safeHttp(au.uri);
+        var name=auUri?'<a class="auname" href="'+escAttr(auUri)+'" target="_blank" rel="noopener">'+nm+'</a>':'<span class="auname">'+nm+'</span>';
+        var o='<div class="grv-rv"><div class="auline">'+av+name+'<span class="aumeta">'+esc(r.relativeTime||'')+'</span></div>';
+        o+='<div class="rvstars">'+stars(r.rating)+'</div>';
+        if(r.translated){o+='<span class="grv-trans">自動翻訳</span>';}
+        o+='<div class="tx">'+esc(r.text)+'</div>';
+        var mu=safeHttp(r.mapsUri);
+        if(mu){o+='<a class="grv-rvlink" href="'+escAttr(mu)+'" target="_blank" rel="noopener">Googleマップでこのクチコミを見る</a>';}
+        return o+'</div>';
+      }).join('');
+    }else{
+      h+='<div class="grv-empty">星4以上のクチコミは現在表示できません。Googleマップで全てのクチコミをご覧いただけます。</div>';
+    }
+    var top=safeHttp(d.mapsUri)||mapsUrl(st);
+    h+='<a class="grv-map" href="'+escAttr(top)+'" target="_blank" rel="noopener">Googleマップで開く</a>';
+    document.getElementById('grvBody').innerHTML=h;
+  }
+
+  /* ---- 取得: タップ時のみ・メモリ内キャッシュ・タイムアウト・失敗時リンク表示 ---- */
+  function loadStore(i){
+    var st=CONFIG.STORES[i], key=st.key;
+    if(state.cache[key]){renderData(st,state.cache[key]);return;}
+    renderLoading();
+    if(state.pending[key])return;
+    state.pending[key]=true;
+    var ctl=('AbortController' in window)?new AbortController():null;
+    var tm=setTimeout(function(){if(ctl)ctl.abort();},CONFIG.FETCH_TIMEOUT_MS);
+    fetch(CONFIG.PROXY_URL+'?store='+encodeURIComponent(key),ctl?{signal:ctl.signal}:{})
+      .then(function(r){clearTimeout(tm);if(!r.ok)throw 0;return r.json();})
+      .then(function(j){
+        state.pending[key]=false;
+        if(j&&j.ok&&j.mode==='full'&&j.store&&j.store.rating!=null){
+          state.cache[key]=j.store; /* JSメモリ内のみ。localStorage等への書き込みは行わない */
+          if(state.tab===i)renderData(st,j.store);
+        }else{ if(state.tab===i)renderLinkOnly(st); }
+      })
+      .catch(function(){clearTimeout(tm);state.pending[key]=false;if(state.tab===i)renderLinkOnly(st);});
+  }
+  function openPopup(i){state.tab=i;document.getElementById('grvOv').classList.add('open');loadStore(i);}
+
+  /* ---- イベント ---- */
   document.getElementById('grvBadge').addEventListener('click',function(e){
     var c=e.target.closest('.gb-chip'); if(!c) return;
-    state.tab=+c.dataset.i; open();
+    var i=+c.dataset.i, st=CONFIG.STORES[i];
+    if(CONFIG.MODE==='FULL'){ openPopup(i); }
+    else{ window.open(mapsUrl(st),'_blank','noopener'); } /* LINK: Googleマップへ直遷移 */
   });
   document.getElementById('grvClose').addEventListener('click',function(){document.getElementById('grvOv').classList.remove('open');});
   document.getElementById('grvOv').addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
-  document.getElementById('grvTabs').addEventListener('click',function(e){var t=e.target.closest('.grv-tab');if(t){state.tab=+t.dataset.i;render();}});
-  function pickStore(stores,st){
-    var hit=null;
-    for(var i=0;i<stores.length;i++){ if(stores[i]&&stores[i].name===st.jsonName){hit=stores[i];break;} }
-    if(!hit){ for(var j=0;j<stores.length;j++){ var n=(stores[j]&&stores[j].name)||''; if(n&&(n.indexOf(st.jsonName)>=0||st.jsonName.indexOf(n)>=0)){hit=stores[j];break;} } }
-    return hit;
-  }
-  function init(json){
-    if(!json||!Array.isArray(json.stores)) return; /* フェイルセーフ */
-    var out=[];
-    CONFIG.STORES.forEach(function(st){
-      var d=pickStore(json.stores,st);
-      if(d&&d.rating!=null&&d.userRatingCount!=null){
-        out.push({label:st.label,jsonName:d.name,placeId:d.placeId,rating:d.rating,count:d.userRatingCount,reviews:Array.isArray(d.reviews)?d.reviews:[]});
-      }
-    });
-    if(out.length){state.data=out;showBadge();}
-    /* 該当店舗なし・rating等null → 非表示のまま(フェイルセーフ) */
-  }
-  function fresh(json){ /* 鮮度検査: updatedAtが古すぎるデータは不採用(フェイルセーフ) */
-    if(!json||!json.updatedAt) return true; /* updatedAt無しは検査対象外(埋め込み等) */
-    var t=new Date(json.updatedAt).getTime();
-    if(isNaN(t)) return true;
-    return (Date.now()-t) <= CONFIG.MAX_AGE_DAYS*24*3600*1000;
-  }
-  if(CONFIG.EMBEDDED_DATA){ init(CONFIG.EMBEDDED_DATA); }
-  else{
-    var ctl=('AbortController' in window)?new AbortController():null;
-    var tm=setTimeout(function(){if(ctl)ctl.abort();},CONFIG.FETCH_TIMEOUT_MS);
-    fetch(CONFIG.REVIEW_API_URL,ctl?{signal:ctl.signal}:{})
-      .then(function(r){clearTimeout(tm);if(!r.ok)throw 0;return r.json();})
-      .then(function(j){ if(fresh(j)) init(j); /* 古いデータは非表示のまま */ })
-      .catch(function(){clearTimeout(tm);/* 取得失敗: 非表示のまま。LP本体へ影響なし */});
-  }
+  document.getElementById('grvTabs').addEventListener('click',function(e){var t=e.target.closest('.grv-tab');if(t){state.tab=+t.dataset.i;loadStore(state.tab);}});
+
+  showBadge(); /* バッジはモード共通・データ取得なしで即表示 */
+
   /* --- スクロール表示制御: sec-kamakura到達までは非表示 / 以降は下スクロール中OFF・上スクロールor停止でON --- */
   (function(){
     var badge=document.getElementById('grvBadge');
     var lastY=window.pageYOffset, idleTm=null, DELTA=10;
     function revealLine(){
       var home=document.querySelector('.page.active');
-      if(!home||home.id!=='pg-home') return -1; /* ホーム以外は常に到達扱い */
+      if(!home||home.id!=='pg-home') return -1;
       var el=document.getElementById('sec-kamakura');
       if(!el) return -1;
       return el.getBoundingClientRect().top + window.pageYOffset;
     }
     function setHidden(h){badge.classList.toggle('gb-hide',h);}
     function onScroll(){
-      if(!badge.classList.contains('show')) return; /* データ未取得時は対象外 */
+      if(!badge.classList.contains('show')) return;
       var y=window.pageYOffset, dy=y-lastY;
       var line=revealLine();
       var past=(line<0)||((y+window.innerHeight*0.85)>=line);
       if(!past){ setHidden(true); lastY=y; if(idleTm){clearTimeout(idleTm);idleTm=null;} return; }
       if(Math.abs(dy)>=DELTA){
-        setHidden(dy>0); /* 下スクロール=隠す / 上スクロール=出す */
+        setHidden(dy>0);
         lastY=y;
         if(idleTm)clearTimeout(idleTm);
-        idleTm=setTimeout(function(){ idleTm=null; setHidden(false); },600); /* 停止0.6秒で再表示 */
+        idleTm=setTimeout(function(){ idleTm=null; setHidden(false); },600);
       }else if(dy===0 && !idleTm){
-        setHidden(false); /* 定期チェック: 停止状態で到達済みなら表示(タイマーは触らない) */
+        setHidden(false);
       }
     }
     window.addEventListener('scroll',onScroll,{passive:true});
     window.addEventListener('resize',onScroll);
-    setInterval(onScroll,700); /* ページ切替(go)後の追従 */
+    setInterval(onScroll,700);
     onScroll();
   })();
 })();
