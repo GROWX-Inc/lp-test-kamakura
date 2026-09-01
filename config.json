@@ -1,0 +1,51 @@
+{
+  "_comment": "計測導入の設定。1案件1ファイル。gmeas_mode: \"file\"=gmeas.jsを生成（億万鳥者型） / \"existing\"=既にgMeasがHTML内にあるLP（KAMAKURA型。brand初期pushだけ入れる）",
+  "client": "IFREA DINING",
+  "brand": "kamakura",
+  "store_default": "",
+  "site_hostnames": [
+    "ifreagroup.co.jp",
+    "www.ifreagroup.co.jp"
+  ],
+  "gtm_container_public_id": "GTM-K8Z45R9G",
+  "gtm_account_id": "",
+  "gtm_container_id": "",
+  "ga4_property_id": "550969840",
+  "ga4_measurement_id": "G-5G81FCH20E",
+  "repo_dir": ".",
+  "html_files": [
+    "index.html"
+  ],
+  "gmeas_path": "gmeas.js",
+  "page_type_rules": [
+    {
+      "prefix": "",
+      "type": "top"
+    }
+  ],
+  "scroll_marks": {
+    "top": [
+      {
+        "sel": "#sec-kamakura",
+        "id": "welcome"
+      },
+      {
+        "sel": ".resv-btnwrap",
+        "id": "reserve"
+      }
+    ]
+  },
+  "reserve_hosts": [
+    "booking.ebica.jp"
+  ],
+  "review_link_ids": [
+    "hdCta",
+    "dwGr"
+  ],
+  "prod_base_url": "https://ifreagroup.co.jp/kamakura/",
+  "deploy": {
+    "local_dir": ".",
+    "server_dir": "/ifreagroup.co.jp/public_html/kamakura/"
+  },
+  "gmeas_mode": "existing"
+}
