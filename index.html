@@ -334,6 +334,15 @@ filter:blur(1.5px)}
 .lgbtn.lg-strong{background:var(--ink);border-color:var(--ink);color:#FAF6EE;box-shadow:none}
 .lgbtn .chev i{color:inherit;opacity:.55}
 .resv-note{color:var(--sub)}
+/* 2026-10 食べログ外部遷移パネル（メニュー・プラン一時非表示） */
+.tbl-panel{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.tbl-lead{font-size:15px;line-height:1.9;color:var(--ink);margin:0 0 6px}
+.tbl-ph{display:inline-block}
+.tbl-btn{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding:12px 22px;border:1px solid rgba(169,136,70,.55);background:#fff;color:var(--ink);text-decoration:none;font-family:'Noto Serif JP',serif;font-weight:500;font-size:15px;letter-spacing:.12em;transition:background .25s ease,color .25s ease}
+.tbl-btn:hover,.tbl-btn:focus-visible{background:var(--ink);color:#FAF6EE}
+.tbl-ext{font-size:16px;letter-spacing:0;color:var(--ochre-deep)}
+.tbl-btn:hover .tbl-ext,.tbl-btn:focus-visible .tbl-ext{color:inherit}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 /* ===== gRev: Googleクチコミ B案 (badge + popup) ===== */
 .grv-badge{position:fixed;right:10px;top:104px;z-index:59;display:none;flex-direction:column;gap:6px}
 .grv-badge.show{display:flex}
@@ -467,14 +476,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section style="padding-top:44px">
   <div class="eyebrow rv">Menu</div>
   <h2 class="rv">商品・サービス紹介</h2>
-  
+<!-- 2026-10 一時非表示：メニューは食べログへ外部遷移（復帰時はこのパネルを削除し、下の tbl-hold の hidden を外す） -->
+<div class="tbl-panel rv">
+  <p class="tbl-lead"><span class="tbl-ph">最新のメニューは、</span><span class="tbl-ph">食べログでご覧いただけます。</span></p>
+  <a class="tbl-btn" href="https://tabelog.com/tokyo/A1304/A130401/13261756/dtlmenu/" target="_blank" rel="noopener" data-tabelog="menu"><span>新宿店のメニューを見る</span><span class="tbl-ext" aria-hidden="true">↗</span><span class="sr-only">（食べログが新しいタブで開きます）</span></a>
+  <a class="tbl-btn" href="https://tabelog.com/tokyo/A1312/A131201/13251517/dtlmenu/" target="_blank" rel="noopener" data-tabelog="menu"><span>錦糸町店のメニューを見る</span><span class="tbl-ext" aria-hidden="true">↗</span><span class="sr-only">（食べログが新しいタブで開きます）</span></a>
+</div>
   </section>
+<div class="tbl-hold" hidden>
 <section class="gmenu mlist rv"><h4>おすすめメニュー</h4><div class="mi"><span class="n">神隠しの屋台 特製謎のプルプル</span><span class="dots"></span><span class="p">¥880</span></div><div class="mi"><span class="n">天空少女が作る特製シチュー〜思い出の目玉焼きトースト〜</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">『芽が出た!』植木鉢のポテトサラダ</span><span class="dots"></span><span class="p">¥680</span></div><div class="mi"><span class="n">炭鉱少年の肉団子スープ</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">もののけ干し肉のカルボナーラ</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">魔法使いのチョコレートケーキ</span><span class="dots"></span><span class="p">¥1,180</span></div></section><section class="gmenu mlist rv"><h4>お通し</h4><div class="mi"><span class="n">かまくらの前菜マカロン</span><span class="dots"></span><span class="p">¥400</span></div></section><section class="showcase rv catShow" id="sig" data-idx="0" style="background:#8A5F66"><div class="sc-en">Prosciutto</div><h3 class="sc-jp">自家製和牛の生ハム(九州醤油 ワサビ)</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i11_b261b3d2.jpg" alt="自家製和牛の生ハム(九州醤油 ワサビ)"></div><div class="sc-disc"><img src="img2/i12_47fbe6ad.jpg" alt="自家製牛タン・サガリ(オリーブ塩だれ/レモン)"></div><div class="sc-disc"><img src="img2/i13_7ae3627d.jpg" alt="生ハムの盛り合わせ 3種"></div><div class="sc-disc"><img src="img2/i14_556b2cfc.jpg" alt="生ハムの盛り合わせ 4種"></div><div class="sc-disc"><img src="img2/i15_dc2f05d7.jpg" alt="ハモンセラーノ(EXオリーブオイル/BP)"></div></div><div class="sc-price">¥1,240(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">チョイス(生ハムのお供) — サラダ/ゼッポリーニ/ラスパデューラ/季節のフルーツ/ブドウ2種</span><span class="dots"></span><span class="p">¥150〜</span></div></div>
 <section class="showcase rv catShow" data-idx="1" style="background:#5C6650"><div class="sc-en">Appetizer</div><h3 class="sc-jp">菜園風ポテトサラダ</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i16_395d9ec1.jpg" alt="菜園風ポテトサラダ"></div><div class="sc-disc"><img src="img2/i17_4eee13a4.jpg" alt="三陸産ヒラメと生海苔のカルパッチョ"></div><div class="sc-disc"><img src="img2/i18_d0e6e462.jpg" alt="鮪と沢庵のタルタル〜とろたく仕立て〜"></div><div class="sc-disc"><img src="img2/i19_08c5d74f.jpg" alt="広島県産牡蠣のグラティナート"></div></div><div class="sc-price">¥680(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">木の実といちじくのハニーチーズ</span><span class="dots"></span><span class="p">¥580</span></div><div class="mi"><span class="n">おつまみバスクチーズケーキ</span><span class="dots"></span><span class="p">¥780</span></div></div><section class="gmenu mlist rv"><h4>Salad</h4><div class="mi"><span class="n">グリルロメインレタスのシーザーサラダ</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">サーモンとアボカドのサラダ 自家製ドレッシング</span><span class="dots"></span><span class="p">¥980</span></div></section><section class="gmenu mlist rv"><h4>Bread</h4><div class="mi"><span class="n">プレーンバゲット</span><span class="dots"></span><span class="p">¥330</span></div></section>
 <section class="showcase rv catShow" data-idx="2" style="background:#A98850"><div class="sc-en">A La Carte</div><h3 class="sc-jp">牛タン春巻き</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i20_3badfd88.jpg" alt="牛タン春巻き"></div><div class="sc-disc"><img src="img2/i21_75b23f4e.jpg" alt="牡蛎のアヒージョ"></div><div class="sc-disc"><img src="img2/i22_6eb56bd5.jpg" alt="大トロホルモンと自家製おろしポン酢(アヒージョスタイル)"></div><div class="sc-disc"><img src="img2/i23_77cbf68c.jpg" alt="フライドポテト 〜サワークリームとスイートチリ〜"></div><div class="sc-disc"><img src="img2/i24_091e6afb.jpg" alt="カニのタルタルトースト"></div></div><div class="sc-price">¥400(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">和牛の肉BAKUDAN</span><span class="dots"></span><span class="p">¥1,480</span></div></div>
 <section class="showcase rv catShow" data-idx="3" style="background:#43222A"><div class="sc-en">Meat</div><h3 class="sc-jp">燃えるハンバーグ 卵黄ダレと自家製おろしポン酢</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i25_d27b7995.jpg" alt="燃えるハンバーグ 卵黄ダレと自家製おろしポン酢"></div><div class="sc-disc"><img src="img2/i26_3bbfbc5e.jpg" alt="KAMAKURA 肉の盛り合わせ"></div><div class="sc-disc"><img src="img2/i27_26fd3a6d.jpg" alt="鴨のロースト〜熟成味噌と香味醤油〜"></div><div class="sc-disc"><img src="img2/i28_a14d1762.jpg" alt="肉汁！！サルシッチャソーセージ"></div></div><div class="sc-price">¥980(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><section class="gmenu mlist rv"><h4>Rice</h4><div class="mi"><span class="n">ライス</span><span class="dots"></span><span class="p">¥450</span></div></section><section class="gmenu mlist rv"><h4>Omelette</h4><div class="mi"><span class="n">KAMAKURA風鉄板卵焼き(スフレスタイル)</span><span class="dots"></span><span class="p">¥980</span></div></section><section class="gmenu mlist rv"><h4>Pasta</h4><div class="mi"><span class="n">ワタリガニのトマトクリーム</span><span class="dots"></span><span class="p">¥980</span></div><div class="mi"><span class="n">パスタ大盛り</span><span class="dots"></span><span class="p">¥100</span></div></section><section class="gmenu mlist rv"><h4>冷麺</h4><div class="mi"><span class="n">麻辣担冷麺</span><span class="dots"></span><span class="p">¥1,380</span></div><div class="mi"><span class="n">蟹香るビスク冷麺</span><span class="dots"></span><span class="p">¥1,380</span></div></section>
 <section class="showcase rv catShow" data-idx="4" style="background:#6B4A3E"><div class="sc-en">Dessert</div><h3 class="sc-jp">KAMAKURA生プリン</h3><div class="sc-stage"><div class="sc-disc"><img src="img2/i29_0c4ad1fb.jpg" alt="KAMAKURA生プリン"></div><div class="sc-disc"><img src="img2/i30_0ae07ccb.jpg" alt="焼きレアチーズ"></div><div class="sc-disc"><img src="img2/i31_538b6075.jpg" alt="テリーヌショコラ"></div></div><div class="sc-price">¥380(税込)</div><p class="sc-desc"></p><div class="sc-nav"><button class="sc-arrow prv" aria-label="前へ">‹</button><span class="sc-dots"></span><button class="sc-arrow nxt" aria-label="次へ">›</button></div></section><div class="gmenu msub rv"><div class="mi"><span class="n">京都ほうじ茶のアイス</span><span class="dots"></span><span class="p">¥400</span></div></div>
 <div class="cbx-note rv">※税込価格。食べログ新宿店の公式掲載メニュー(2026年8月10日確認)に準拠。</div>
+</div>
 <section id="ann" class="dark">
   <div class="eyebrow rv">Anniversary</div>
   <h2 class="lines"><span class="ln">忘れられない夜は、</span><span class="ln">KAMAKURAでつくれる。</span></h2>
@@ -489,6 +505,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section style="padding-top:44px">
   <div class="eyebrow rv">Plan / Course</div>
   <h2 class="rv">料金・プラン</h2>
+  <!-- 2026-10 一時非表示：コースは食べログへ外部遷移（復帰時はこのパネルを削除し、下の tbl-hold の hidden を外す） -->
+<div class="tbl-panel rv">
+  <p class="tbl-lead"><span class="tbl-ph">最新のコース・プランは、</span><span class="tbl-ph">食べログでご覧いただけます。</span></p>
+  <a class="tbl-btn" href="https://tabelog.com/tokyo/A1304/A130401/13261756/party/" target="_blank" rel="noopener" data-tabelog="plan"><span>新宿店のコースを見る</span><span class="tbl-ext" aria-hidden="true">↗</span><span class="sr-only">（食べログが新しいタブで開きます）</span></a>
+  <a class="tbl-btn" href="https://tabelog.com/tokyo/A1312/A131201/13251517/party/" target="_blank" rel="noopener" data-tabelog="plan"><span>錦糸町店のコースを見る</span><span class="tbl-ext" aria-hidden="true">↗</span><span class="sr-only">（食べログが新しいタブで開きます）</span></a>
+</div>
+<div class="tbl-hold" hidden>
   <div class="archwrap" style="padding:0 60px"><div class="arch imgrv"><img src="img2/i33_66aa7cc1.jpg" alt="コース料理"></div></div>
   <div class="plan rv"><div class="nm">Lumi — ルミ <small>全8品+2H飲み放題</small></div><div class="pr">¥4,500<small> / 1名(税込)</small></div><p>はじめてのKAMAKURAに。特製マカロン、牛タンを含む生ハム3種盛りで華やかに幕を開け、グリルロメインのシーザー、濃厚カニクリームパスタから“燃えるハンバーグ”へ。締めは特製ドルチェ。看板を一夜で巡る入門編。</p></div>
       <div class="plan rv"><div class="nm">Mellow — メロウ <small>全9品+2H飲み放題</small></div><div class="pr">¥5,500<small> / 1名(税込)</small></div><p>いちばん選ばれている、リピート率No.1。特製マカロンに始まり、遊び心ある菜園風ポテトサラダ、パルミジャーノを贅沢にかけた和牛炙りカルパッチョ、広島県産牡蠣のグラティナート、鴨のロースト、本格カルボナーラまで。味わいを重ねる全9品。</p></div>
@@ -496,6 +519,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       <div class="plan rv"><div class="nm">2時間 単品飲み放題 <small>全35種以上</small></div><div class="pr">¥2,000<small> / 1名(税込)</small></div><p>急な集まりに。生ビールも選べる全35種以上。かまくら個室で、まわりを気にせずゆっくり2時間。</p></div>
       <div class="plan rv"><div class="nm">お席のみのご予約</div><div class="pr">FREE<small> — アラカルト</small></div><p>コースを決めずに、当日お好きな一皿を。シェフこだわりのアラカルトからどうぞ。</p></div>
       <div class="note">全コース2時間制。+¥2,000でメッセージ付きアニバーサリーBOXをご用意できます。</div>
+</div>
   <div class="resv rv"><div class="resv-in"><div class="lgpill resv-i1"><span class="dot"></span>オンライン予約</div><div class="resv-btnwrap resv-i3"><div class="resv-glow"></div><a class="lgbtn lg-strong" href="https://booking.ebica.jp/webrsv/search/e014094701/29221?affiid=mail-magazine" target="_blank" rel="noopener"><span>新宿店を予約する</span><span class="chev"><i>›</i><i>›</i><i>›</i></span></a></div><a class="lgbtn resv-i4" href="https://booking.ebica.jp/webrsv/search/e014094701/29222?affiid=sc01" target="_blank" rel="noopener"><span>錦糸町店を予約する</span><span class="chev"><i>›</i><i>›</i><i>›</i></span></a><div class="resv-note resv-i5">24時間受付</div></div></div>
 </section>
 </main>
@@ -1197,6 +1221,8 @@ window.DISSOLVE_END = 0.35;
     function storeFromUrl(h){
       if(h.indexOf("/29221")>=0) return "shinjuku";
       if(h.indexOf("/29222")>=0) return "kinshicho";
+      if(h.indexOf("/13261756/")>=0) return "shinjuku";   /* 食べログ新宿店 */
+      if(h.indexOf("/13251517/")>=0) return "kinshicho";  /* 食べログ錦糸町店 */
       if(h.indexOf("Z1DtUj3HYBV3NJ8a9")>=0) return "shinjuku";
       if(h.indexOf("k5ZuQw4PZJxhh4Aw5")>=0) return "kinshicho";
       if(h.indexOf("kamakura_shinjuku")>=0) return "shinjuku";
@@ -1218,6 +1244,9 @@ window.DISSOLVE_END = 0.35;
                   store:storeFromUrl(h)});
           }else if(h.indexOf("maps.app.goo.gl")>=0 || h.indexOf("google.com/maps")>=0){
             push({event:"outbound_click", link_type:"map", url:h, store:storeFromUrl(h)||grvStore(a)});
+          }else if(h.indexOf("tabelog.com")>=0){
+            /* 2026-10 食べログ（メニュー/コース）への外部遷移 */
+            push({event:"outbound_click", link_type:"tabelog", url:h, store:storeFromUrl(h)});
           }else if(h.indexOf("instagram.com")>=0){
             push({event:"outbound_click", link_type:"sns", url:h, store:storeFromUrl(h)});
           }
